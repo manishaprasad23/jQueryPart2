@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  <!-- Mobile viewport optimized -->
+
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet"> 
+
+	<title></title>
+</head>
+
+<body ng-app="myApp" ng-controller="myCtrl">
+
+	<div class="container-fluid">
+		<div class="navbar navbar-fixed-top navbar-inverse">
+			<!-- nav bar div -->
+			<div class="container">
+				<button class="navbar-toggle" data-target=".navbar-responsive-collapse" data-toggle="collapse" type="button">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+
+				<div class="navbar-collapse collapse navbar-responsive-collapse">
+
+					<h1 class="header1">California Population Database</h1>
+
+				</div> <!-- navbar-collapse ends -->
+			</div> <!-- nav bar container ends -->
+		</div> <!-- navbar-inverse ends -->
+
+		<!-- <div id="image"> 
+			<img src="img/people.jpg" alt="Image not found" class="pic">
+
+		</div> --> <!-- image ends -->
+		
+	</div> <!-- container-fluid ends -->
+
+	<div class="container">
+
+		<div class="finder">
+
+			<h2 class="header2">Retrieve all information about any citizen at a single click!</h2> <br />
+
+
+			<form class="navbar-form" method="post" id="myForm">
+				<center>
+					<input type="text" class="form-control" placeholder="Enter name..." id="searchtext" ng-model="txt"> <br /> <br>
+					<input type="button" id="find" class="btn btn-primary" value="SEARCH" ng-click="funSearch()">
+					<!-- <input type="button" id="add" class="btn" value="ADD"> -->
+					<a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">ADD</a>
+					<input type="button" id="load" class="btn btn-primary" value="LOAD" ng-click="funLoad()">
+				</center>
+			</form>
+
+		</div> <!-- finder ends -->
+
+		<br> 
+
+		<hr>
+
+		<div class="row" ng-hide="val">
+			<div class="col-12">
+				<div class="thumbnails row">
+					<div class="col-sm-12">
+						<h3 id="details_head">Details</h3>
+						<div class="thumbnail" id="right_col">
+							<!-- <div class="caption">
+								<div id="wrap">
+									<div id="newData"> -->
+										<div class="table-responsive">
+											<table class="table table_data" id="tableData">
+												<!-- <template id="add-Template"> -->
+
+												<tr ng-repeat="x in table_Data" ng-if="$first">
+
+													<th ng-repeat="(key, val) in x | orderBy: key">{{key}}</th>
+
+												<!-- <th>ID</th>
+												<th>NAME</th>
+												<th>CITY</th>
+												<th>PHONE</th> -->
+											</tr>
+
+											  <tr data-id='{{id}}' ng-repeat="x in table_Data">
+												<td>{{x.id}}</td>
+												<td><span class="noedit name">{{x.name}}</span><input class="edit name" ng-show="active==x" ng-model="people.name" placeholder="{{x.name}}"></td>
+												<td><span class="noedit city">{{x.city}}</span><input class="edit city" ng-show="active==x" ng-model="people.city" placeholder="{{x.city}}"></td>
+												<td><span class="noedit phone">{{x.phone}}</span><input class="edit phone" ng-show="active==x" ng-model="people.phone" placeholder="{{x.phone}}"></td>
+												
+												<!-- <tr ng-repeat="x in table_Data">
+													<td ng-repeat="(key, val) in x | orderBy: key">{{val}}
+													<input ng-show="active==x" value="{{val}}"></td>-->
+													
+													<td><button data-id='{{id}}' class='btn btn-danger remove' ng-click="funDelete($index,x.id)">DELETE</button></td>
+													<td><button data-id='{{id}}' class='btn btn-warning editPeople noedit' ng-click="funUpdate(x)">UPDATE</button></td>
+
+													
+													<td><button data-id='{{id}}' ng-show="active==x" class='btn btn-success saveEdit' ng-click="funSaveUp(people,x.id)">SAVE</button></td>
+													<td><button data-id='{{id}}' ng-show="active==x" class='btn btn-info cancelEdit' ng-click="funCancel()">CANCEL</button></td></tr>
+
+													<!-- </template> -->
+												</table>
+											</div> <!-- table-responsive -->
+										<!-- </div> newData ends -->
+									<!-- </div>  wrap ends -->
+
+
+								<!-- </div> caption ends -->
+							</div>
+						</div>
+					</div> 
+				</div>  <!-- col-12 ends -->
+			</div>  <!-- row ends -->
+
+
+			<button class='btn btn-success saveEdit col-6' ng-hide="btnhide" ng-click="funPrev()">PREV</button>
+			<button class='btn btn-success saveEdit col-6' ng-hide="btnhide" ng-click="funNext()">NEXT</button>
+
+
+
+			<!-- *******************Code for Modal window******************** -->
+
+
+			<div class="modal fade" id="myModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Details Form</h4>
+						</div>
+						<!-- modal-header ends -->
+						<div class="modal-body">
+
+							<p><small class="text-muted">Please fill all the details. Do not leave blanks.</small></p>
+							
+							<form class="form-horizontal" name="myForm" novalidate>
+								<div class="form-group">
+									<label class="col-lg-2 control-label" for="inputName">Name</label>
+									<div class="col-lg-10">
+										<input class="form-control" type="text" id="inputName" placeholder="Name" name="user" ng-model="user" required>
+										<span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+											<span ng-show="myForm.user.$error.required">Name is required.</span>
+										</span>
+									</div>
+								</div>
+								<!-- form-group ends -->
+								<div class="form-group">
+									<label class="col-lg-2 control-label" for="inputCity">City</label>
+									<div class="col-lg-10">
+										<input class="form-control" type="text" id="inputCity" placeholder="City" name="city" ng-model="city" required>
+										<span style="color:red" ng-show="myForm.city.$dirty && myForm.city.$invalid">
+											<span ng-show="myForm.city.$error.required">City is required.</span>
+										</div>
+									</div>
+									<!-- form-group ends -->
+									<div class="form-group">
+										<label class="col-lg-2 control-label" for="inputPhone">Phone</label>
+										<div class="col-lg-10">
+											<input class="form-control" type="number" id="inputPhone" placeholder="Phone" name="phone" ng-model="phone" required>
+											<span style="color:red" ng-show="myForm.phone.$dirty && myForm.phone.$invalid">
+												<span ng-show="myForm.phone.$error.required">Phone number is required.</span>
+											</div>
+										</div>
+										<!-- form-group ends -->
+									</form>
+
+								</div>
+								<!-- modal-body ends -->
+
+								<div class="modal-footer">
+									<button class="btn btn-primary" type="submit" id="save" ng-disabled="myForm.user.$dirty && myForm.user.$invalid ||
+									myForm.city.$dirty && myForm.city.$invalid || myForm.phone.$dirty && myForm.phone.$invalid" ng-click="funSave()">Save</button>
+
+									<button class="btn btn-default" data-dismiss="modal" type="submit" id="cancel">Cancel</button>
+								</div>
+								<!-- modal-footer ends -->
+							</div>
+							<!-- modal-content ends -->
+						</div>
+						<!-- modal-dialog ends -->
+					</div>
+					<!-- myModal ends -->
+
+
+					<!-- ********************** Code for Modal window ends ***************-->
+
+				</div>  <!-- container ends -->
+
+	<!-- <div class="push">
+		
+</div> -->
+
+<!-- <footer>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-2">
+				<h6>Copyright &copy; 2016</h6>
+			</div> -->
+			<!-- col-sm-2 ends -->
+			<!-- <div class="col-sm-4">
+				<h6>About us</h6>
+				<p>Some text goes here</p>
+			</div> -->
+			<!-- col-sm-4 ends -->
+			<!-- <div class="col-sm-2">
+				<h6>Navigation</h6>
+				<ul class="unstyled">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Services</a></li>
+					<li><a href="#">Links</a></li>
+					<li><a href="#">Contact</a></li>
+				</ul>
+			</div> -->
+			<!-- col-sm-2 ends -->
+			<!-- <div class="col-sm-2">
+				<h6>Follow us</h6>
+				<ul class="unstyled">
+					<li><a href="#">Facebook</a></li>
+					<li><a href="#">Twitter</a></li>
+					<li><a href="#">Google Plus</a></li>
+				</ul>
+			</div> -->
+			<!-- col-sm-2 ends -->
+			<!-- <div class="col-sm-2">
+				<h6>Coded by Manisha</h6>
+			</div> -->
+			<!-- col-sm-2 ends -->
+			<!-- </div> -->
+			<!-- row ends -->
+			<!-- </div> -->
+			<!-- container ends -->
+
+			<!-- </footer> -->
+
+			<!-- All Javascript at the bottom of the page for faster page loading -->
+
+			<!-- First try for the online version of jQuery-->
+			<script src="http://code.jquery.com/jquery.js"></script>
+
+			<!-- AngularJS -->
+			<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.1.3/mustache.js"></script>
+
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.1.3/mustache.min.js"></script>
+
+
+			<!-- Bootstrap JS -->
+			<script src="js/bootstrap.min.js"></script>
+
+			<!-- Custom JS -->
+			<script src="js/script.js"></script>
+
+		</body>
+		</html>
