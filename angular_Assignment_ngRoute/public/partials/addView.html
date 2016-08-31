@@ -1,0 +1,50 @@
+
+<div ng-controller="addViewCtrl">
+
+	<div class="container-fluid">
+
+		<form class="form-horizontal" name="myForm" novalidate>
+			<div class="form-group">
+				<label class="col-lg-2 control-label">Name</label>
+				<div class="col-lg-10">
+					<input class="form-control" type="text" placeholder="Name" ng-model="user" required>
+					<span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+						<span ng-show="myForm.user.$error.required">Name is required.</span>
+					</span>
+				</div>
+			</div>
+			<!-- form-group ends -->
+			<div class="form-group">
+				<label class="col-lg-2 control-label">City</label>
+				<div class="col-lg-10">
+					<input class="form-control" type="text" placeholder="City" ng-model="city" required>
+					<span style="color:red" ng-show="myForm.city.$dirty && myForm.city.$invalid">
+						<span ng-show="myForm.city.$error.required">City is required.</span>
+					</span>
+				</div>
+			</div>
+			<!-- form-group ends -->
+			<div class="form-group">
+				<label class="col-lg-2 control-label">Phone</label>
+				<div class="col-lg-10">
+					<input class="form-control" type="number" placeholder="Phone" ng-model="phone" required>
+					<span style="color:red" ng-show="myForm.phone.$dirty && myForm.phone.$invalid">
+						<span ng-show="myForm.phone.$error.required">Phone number is required.</span>
+					</span>
+				</div>
+			</div>
+			<!-- form-group ends -->
+		</form>
+
+		<center>
+			<button class="btn btn-primary" type="submit" id="save" ng-disabled="myForm.user.$dirty && myForm.user.$invalid ||
+			myForm.city.$dirty && myForm.city.$invalid || myForm.phone.$dirty && myForm.phone.$invalid" ng-click="funSave()">Save</button>
+
+			<!-- <button class="btn btn-default" data-dismiss="modal" type="submit" id="cancel">Cancel</button> -->
+			<a href="/index" role="button" class="btn btn-default">Cancel</a>
+		</center>
+
+
+	</div>
+
+</div>

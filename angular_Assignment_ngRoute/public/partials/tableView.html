@@ -1,0 +1,54 @@
+<div ng-controller="tableViewCtrl">
+	<div class="row" ng-hide="val">
+		<div class="col-12">
+			<div class="thumbnails row">
+				<div class="col-sm-12">
+					<h3 id="details_head">Details</h3>
+					<div class="thumbnail" id="right_col">
+
+						<div class="table-responsive">
+							<table class="table table_data" id="tableData">
+
+								<tr ng-repeat="x in table_Data" ng-if="$first">
+
+									<th ng-repeat="(key, val) in x | orderBy: key">{{key}}</th>
+
+												<!-- <th>ID</th>
+												<th>NAME</th>
+												<th>CITY</th>
+												<th>PHONE</th> -->
+											</tr>
+
+											<tr data-id='{{id}}' ng-repeat="x in table_Data">
+												<td>{{x.id}}</td>
+												<td><span class="noedit name">{{x.name}}</span><input class="edit name" ng-show="active==x" ng-model="people.name" placeholder="{{x.name}}"></td>
+												<td><span class="noedit city">{{x.city}}</span><input class="edit city" ng-show="active==x" ng-model="people.city" placeholder="{{x.city}}"></td>
+												<td><span class="noedit phone">{{x.phone}}</span><input class="edit phone" ng-show="active==x" ng-model="people.phone" placeholder="{{x.phone}}"></td>
+												
+												<!-- <tr ng-repeat="x in table_Data">
+													<td ng-repeat="(key, val) in x | orderBy: key">{{val}}
+														<input ng-show="active==x" value="{{val}}"></td>-->
+
+														<td><button class='btn btn-danger remove' ng-click="funDelete($index,x.id)">DELETE</button></td>
+														
+														<td><a href="/editView" role="button" class="btn btn-warning" ng-click="funUpdate(x.id)">UPDATE</a></td>
+
+
+														<!-- <td><button class='btn btn-success saveEdit' ng-show="active==x" ng-click="funSaveUp(people,x.id)">SAVE</button></td>
+														<td><button class='btn btn-info cancelEdit' ng-show="active==x" ng-click="funCancel()">CANCEL</button></td> --></tr>
+
+													</table>
+												</div> <!-- table-responsive -->
+
+
+											</div>
+										</div>
+									</div> 
+								</div>  <!-- col-12 ends -->
+							</div>  <!-- row ends -->
+
+							<center>
+								<button class='btn btn-success saveEdit col-6' ng-hide="btnhide" ng-click="funPrev()">PREV</button>
+								<button class='btn btn-success saveEdit col-6' ng-hide="btnhide" ng-click="funNext()">NEXT</button>
+							</center>
+						</div>
